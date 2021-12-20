@@ -1,0 +1,35 @@
+.card {
+  background-color: v(clr-neutral-100);
+  border: 1px solid v(clr-neutral-300);
+  @include darkmode {
+    background-color: v(clr-neutral-500);
+    border: 1px solid v(clr-neutral-400);
+  }
+  @include padding(em(42) null);
+  border-radius: 20px;
+  text-align: left;
+  h3 {
+    margin-bottom: rem(32);
+    font-size: v(fs-4xl);
+  }
+  .divider {
+    @include padding(em(20) em(38));
+    border-bottom: 1px solid v(clr-neutral-300);
+    &:last-of-type {
+      border-bottom: none;
+    }
+  }
+  .split {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  p {
+    font-weight: map-get($weights, 600);
+    text-transform: capitalize;
+    font-size: v(fs-sm);
+    > span {
+      color: v(clr-neutral-500);
+    }
+  }
+}

@@ -1,0 +1,110 @@
+// Default values
+:root {
+  @each $size, $value in $sizes {
+    --fs-#{$size}: #{$value};
+  }
+}
+
+// Defult and light mode colours.
+:root,
+[data-theme='light'] {
+  @each $colour, $shades in $colours {
+    @if $colour != 'dark' {
+      @each $shade, $value in $shades {
+        --clr-#{$colour}-#{$shade}: #{$value};
+      }
+    }
+  }
+}
+
+// Dark mode colours.
+[data-theme='dark'] {
+  @each $colour, $shades in $colours {
+    @if $colour == 'dark' {
+      @each $shade, $value in $shades {
+        --clr-neutral-#{$shade}: #{$value};
+      }
+    }
+  }
+}
+
+@each $heading, $size in $headings {
+  #{$heading} {
+    font-size: v(fs-#{$size});
+    line-height: map-get($lh, $size);
+    font-weight: map-get($weights, 700);
+    font-family: $fheader;
+  }
+}
+
+// MSIE: Required for IEMobile.
+@-ms-viewport {
+  width: device-width;
+}
+
+html {
+  box-sizing: border-box;
+  font-size: 16px;
+}
+
+body {
+  background-color: v(clr-neutral-black);
+  font: map-get($weights, 400) v(fs-base) / 1 $ff;
+  position: relative;
+  // MSIE: Prevents scrollbar from overlapping content.
+  -ms-overflow-style: scrollbar;
+  // Prevents animation/transition "flicker" on page load.
+  // Automatically added/removed by js/main.js.
+  &.is-loading {
+    overflow: hidden;
+    @include size(null, fill);
+  }
+  p {
+    line-height: map-get($lh, base);
+  }
+}
+
+main {
+  &.is-loading {
+    overflow: hidden;
+    @include size(null, fill);
+    *,
+    *::before,
+    *::after {
+      animation: none !important;
+      transition: none !important;
+    }
+  }
+}
+
+img {
+  display: block;
+  max-width: 100%;
+}
+
+a {
+  cursor: pointer;
+  &:hover {
+    color: v(clr-accent-100);
+  }
+}
+
+ul {
+  list-style: none;
+}
+
+.hide {
+  display: none;
+}
+
+.show {
+  display: block;
+}
+
+// Ensures page width is always >=320px.
+@include media('>=xs') {
+  html,
+  body {
+    min-width: 320px;
+  }
+}

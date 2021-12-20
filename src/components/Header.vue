@@ -1,6 +1,6 @@
 <template>
   <header>
-    <virus />
+    <virus width="100" />
     <h1>{{ title }}</h1>
   </header>
 </template>
@@ -11,6 +11,11 @@ export default {
   name: 'Header',
   components: {
     Virus
+  },
+  data () {
+    return {
+      title: 'Covid Where Art Thou?'
+    }
   }
 }
 </script>
