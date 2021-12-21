@@ -42,11 +42,19 @@ export default {
 .hero {
   @include flex(center, space-between, row);
   h2 {
-    font-size: v(fs-5xl);
     line-height: map-get($lh, 5xl);
+    font-size: clamp(2rem, 5vw, 7rem);
+  }
+  p {
+    font-size: clamp(1.125rem, 3vw, 1.875rem);
+    margin-top: 1.5rem;
+    span {
+      font-weight: map-get($weights, 600);
+      margin-right: 0.8rem;
+    }
   }
   &__img {
-    max-width: 1000px;
+    @include fluid(max-width, 400px, 1000px, 400px, 1920px);
     @include size(100%, auto);
   }
 }
