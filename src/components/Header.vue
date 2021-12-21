@@ -14,8 +14,19 @@ export default {
   },
   data () {
     return {
-      title: 'Covid Where Art Thou?'
+      title: 'Covid, Where Art Thou?'
     }
   }
 }
 </script>
+
+<style lang="scss">
+header {
+  background-color: v(clr-neutral-200);
+  @include flex(center, flex-start, row, false);
+  @include padding(em(20) em(40));
+  h1 {
+    margin-left: rem(40);
+  }
+}
+</style>

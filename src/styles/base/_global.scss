@@ -48,7 +48,7 @@ html {
 }
 
 body {
-  background-color: v(clr-neutral-black);
+  background-color: v(clr-neutral-100);
   font: map-get($weights, 400) v(fs-base) / 1 $ff;
   position: relative;
   // MSIE: Prevents scrollbar from overlapping content.
@@ -75,6 +75,14 @@ main {
       transition: none !important;
     }
   }
+}
+
+.container {
+  flex-grow: 1;
+  margin: 0 auto;
+  position: relative;
+  width: auto;
+  @include fluid(max-width, 280px, 1764px, 321px, 1850px);
 }
 
 img {

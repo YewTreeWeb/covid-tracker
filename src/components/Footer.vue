@@ -1,6 +1,8 @@
 <template>
   <footer>
-    <p>This is the footer</p>
+    <div class="container">
+      <p>This is the footer</p>
+    </div>
   </footer>
 </template>
 
@@ -9,3 +11,10 @@ export default {
   name: 'Footer'
 }
 </script>
+
+<style lang="scss">
+footer {
+  background-color: v(clr-neutral-200);
+  @include padding(em(40));
+}
+</style>

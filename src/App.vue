@@ -1,10 +1,10 @@
 <template>
-  <div class="loading" v-if="loading">Loading data...</div>
+  <loading v-if="loading" />
   <Header />
-  <main>
+  <main class="container" :class="{ 'is-loading': loading }">
     <hero :title="title" :date="date" />
     <stats :stats="global" :countries="countries" />
-    <liveStats :stats="live" />
+    <liveStats :stats="live" :loading="dataLoading" />
   </main>
   <Footer />
 </template>
@@ -15,6 +15,7 @@ import Footer from '@/components/Footer'
 import Hero from '@/components/Hero'
 import Stats from '@/components/Stats'
 import LiveStats from '@/components/LiveStats'
+import Loading from './components/Loading.vue'
 
 export default {
   name: 'App',
@@ -23,11 +24,13 @@ export default {
     Footer,
     Hero,
     Stats,
-    LiveStats
+    LiveStats,
+    Loading
   },
   data () {
     return {
       loading: true,
+      dataLoading: false,
       date: null,
       title: 'Global',
       global: {},
@@ -41,24 +44,10 @@ export default {
       const response = await fetch(api)
       const data = await response.json()
       return data
-    },
-    getLiveData (query) {
-      this.getCovidData(query)
-        .then(data => {
-          const date = new Date()
-          const formatDate = `${date.getFullYear()}-${date.getMonth() +
-            1}-${date.getDate()}`
-          data.filter(item => {
-            if (item.Date.includes(formatDate)) {
-              this.live.push(item)
-            }
-          })
-          this.loading = false
-        })
-        .catch(err => console.error(err))
     }
   },
   created () {
+    const body = document.getElementsByTagName('body')[0]
     this.getCovidData('summary')
       .then(data => {
         if (process.env.NODE_ENV !== 'production') {
@@ -69,13 +58,71 @@ export default {
         this.countries = data.Countries
       })
       .catch(err => console.error(err))
-    this.getLiveData('live/country/united-kingdom')
+    this.getCovidData('live/country/united-kingdom')
+      .then(data => {
+        const date = new Date()
+        const formatDate = `${date.getFullYear()}-${date.getMonth() +
+          1}-${date.getDate()}`
+        data.filter(item => {
+          if (item.Date.includes(formatDate)) {
+            this.live.push(item)
+          }
+        })
+      })
+      .then(() => {
+        setTimeout(() => {
+          this.loading = false
+          body.classList.remove('is-loading')
+        }, 2000)
+      })
+      .catch(err => {
+        if (window.console) {
+          console.error(err)
+        }
+      })
   },
   mounted () {
     window.setInterval(() => {
-      console.log('data refreshed')
-      this.getLiveData('live/country/united-kingdom')
-    }, 600000)
+      this.live = []
+      this.dataLoading = true
+      this.getCovidData('live/country/united-kingdom')
+        .then(data => {
+          const date = new Date()
+          const formatDate = `${date.getFullYear()}-${date.getMonth() +
+            1}-${date.getDate()}`
+          data.filter(item => {
+            if (item.Date.includes(formatDate)) {
+              this.live.push(item)
+            }
+          })
+        })
+        .then(() => {
+          setTimeout(() => {
+            this.dataLoading = false
+          }, 2000)
+        })
+        .catch(err => {
+          if (window.console) {
+            console.error(err)
+          }
+        })
+    }, 900000)
   }
 }
 </script>
+
+<style lang="scss">
+main {
+  @include padding(em(60) null);
+  &.is-loading {
+    overflow: hidden;
+    @include size(null, fill);
+    *,
+    *::before,
+    *::after {
+      animation: none !important;
+      transition: none !important;
+    }
+  }
+}
+</style>
