@@ -3,8 +3,10 @@
   <Header />
   <main class="container" :class="{ 'is-loading': loading }">
     <hero :title="title" :date="date" />
-    <stats :stats="global" :countries="countries" />
-    <liveStats :stats="live" :loading="dataLoading" />
+    <section class="cases">
+      <stats :stats="global" :countries="countries" />
+      <liveStats :stats="live" :loading="dataLoading" />
+    </section>
   </main>
   <Footer />
 </template>
@@ -35,7 +37,8 @@ export default {
       title: 'Global',
       global: {},
       countries: [],
-      live: []
+      live: [],
+      uk: []
     }
   },
   methods: {
@@ -44,10 +47,20 @@ export default {
       const response = await fetch(api)
       const data = await response.json()
       return data
+    },
+    async getGovCovidData () {
+      const response = await fetch(
+        'https://api.coronavirus.data.gov.uk/v1/data'
+      )
+      const data = await response.json()
+      return data
     }
   },
   created () {
     const body = document.getElementsByTagName('body')[0]
+    const date = new Date()
+    const formatDate = `${date.getFullYear()}-${date.getMonth() +
+      1}-${date.getDate()}`
     this.getCovidData('summary')
       .then(data => {
         if (process.env.NODE_ENV !== 'production') {
@@ -60,9 +73,6 @@ export default {
       .catch(err => console.error(err))
     this.getCovidData('live/country/united-kingdom')
       .then(data => {
-        const date = new Date()
-        const formatDate = `${date.getFullYear()}-${date.getMonth() +
-          1}-${date.getDate()}`
         data.filter(item => {
           if (item.Date.includes(formatDate)) {
             this.live.push(item)
@@ -80,6 +90,14 @@ export default {
           console.error(err)
         }
       })
+    this.getGovCovidData()
+      .then(data => {
+        console.log(data)
+        data.forEach(item => {
+          console.log(item)
+        })
+      })
+      .catch(err => err)
   },
   mounted () {
     window.setInterval(() => {
@@ -123,6 +141,10 @@ main {
       animation: none !important;
       transition: none !important;
     }
+  }
+  .cases {
+    @include flex(flex-start, space-between, row);
+    @include padding(em(60) null);
   }
 }
 </style>

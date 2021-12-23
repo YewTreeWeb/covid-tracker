@@ -1,12 +1,14 @@
 <template>
-  <aside>
+  <aside class="card">
     <h3>Live UK Cases</h3>
     <p>All data for Covid cases are refreshed every 15 minutes</p>
     <data-loading v-if="loading" />
-    <ul v-else>
+    <ul class="liveCases" v-else>
       <li v-for="stat in stats" :key="stat.ID">
-        Place: {{ stat.Province }} Active: {{ stat.Active }} Confirmed:
-        {{ stat.Confirmed }} Deaths: {{ stat.Deaths }}
+        <span>Place:</span>{{ stat.Province }}<br />
+        <span>Active:</span>{{ stat.Active }}<br />
+        <span>Confirmed:</span>{{ stat.Confirmed }}<br />
+        <span>Deaths:</span>{{ stat.Deaths }}
       </li>
     </ul>
   </aside>
@@ -28,3 +30,11 @@ export default {
   }
 }
 </script>
+
+<style lang="scss">
+aside {
+  width: max(39%, 500px);
+  max-height: 50vh;
+  overflow-y: scroll;
+}
+</style>
