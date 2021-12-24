@@ -6,9 +6,9 @@
     <ul class="liveCases" v-else>
       <li v-for="stat in stats" :key="stat.ID">
         <span>Place:</span>{{ stat.Province }}<br />
-        <span>Active:</span>{{ stat.Active }}<br />
-        <span>Confirmed:</span>{{ stat.Confirmed }}<br />
-        <span>Deaths:</span>{{ stat.Deaths }}
+        <span>Active:</span>{{ numberFormatting(stat.Active) }}<br />
+        <span>Confirmed:</span>{{ numberFormatting(stat.Confirmed) }}<br />
+        <span>Deaths:</span>{{ numberFormatting(stat.Deaths) }}
       </li>
     </ul>
   </aside>
@@ -26,6 +26,15 @@ export default {
     loading: {
       type: Boolean,
       required: true
+    }
+  },
+  methods: {
+    numberFormatting (x) {
+      let y = 0
+      if (x) {
+        y = x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')
+      }
+      return y
     }
   }
 }

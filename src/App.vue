@@ -4,7 +4,7 @@
   <main class="container" :class="{ 'is-loading': loading }">
     <hero :title="title" :date="date" />
     <section class="cases">
-      <stats :stats="global" :countries="countries" />
+      <stats :stats="global" :countries="countries" v-if="global" />
       <liveStats :stats="live" :loading="dataLoading" />
     </section>
   </main>
@@ -37,8 +37,7 @@ export default {
       title: 'Global',
       global: {},
       countries: [],
-      live: [],
-      uk: []
+      live: []
     }
   },
   methods: {
@@ -90,14 +89,6 @@ export default {
           console.error(err)
         }
       })
-    this.getGovCovidData()
-      .then(data => {
-        console.log(data)
-        data.forEach(item => {
-          console.log(item)
-        })
-      })
-      .catch(err => err)
   },
   mounted () {
     window.setInterval(() => {
