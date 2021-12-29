@@ -1,10 +1,10 @@
 <template>
   <loading v-if="loading" />
-  <Header />
+  <Header :countries="countries" />
   <main class="container" :class="{ 'is-loading': loading }">
     <hero :title="title" :date="date" />
     <section class="cases">
-      <stats :stats="global" :countries="countries" v-if="global" />
+      <stats :stats="global" :countries="countries" :uk="uk" v-if="global" />
       <liveStats :stats="live" :loading="dataLoading" />
     </section>
   </main>
@@ -37,7 +37,8 @@ export default {
       title: 'Global',
       global: {},
       countries: [],
-      live: []
+      live: [],
+      uk: {}
     }
   },
   methods: {
@@ -89,6 +90,18 @@ export default {
           console.error(err)
         }
       })
+    this.getGovCovidData()
+      .then(data => {
+        const stats = data.data
+        const formatDate = `${date.getFullYear()}-${date.getMonth() +
+          1}-${date.getDate() - 1}`
+        stats.filter(item => {
+          if (item.date.includes(formatDate)) {
+            this.uk = item
+          }
+        })
+      })
+      .catch(err => console.error(err))
   },
   mounted () {
     window.setInterval(() => {

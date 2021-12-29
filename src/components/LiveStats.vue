@@ -29,12 +29,12 @@ export default {
     }
   },
   methods: {
-    numberFormatting (x) {
-      let y = 0
-      if (x) {
-        y = x.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')
+    numberFormatting (num) {
+      let formatted = 0
+      if (num) {
+        formatted = num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')
       }
-      return y
+      return formatted
     }
   }
 }
