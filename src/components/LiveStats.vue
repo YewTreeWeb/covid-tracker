@@ -26,16 +26,8 @@ export default {
     loading: {
       type: Boolean,
       required: true
-    }
-  },
-  methods: {
-    numberFormatting (num) {
-      let formatted = 0
-      if (num) {
-        formatted = num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')
-      }
-      return formatted
-    }
+    },
+    numberFormatting: Function
   }
 }
 </script>

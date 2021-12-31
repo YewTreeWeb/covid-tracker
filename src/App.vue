@@ -1,11 +1,21 @@
 <template>
   <loading v-if="loading" />
-  <Header :countries="countries" />
+  <Header :countries="countries" @selectedCountry="getCountry" />
   <main class="container" :class="{ 'is-loading': loading }">
     <hero :title="title" :date="date" />
     <section class="cases">
-      <stats :stats="global" :countries="countries" :uk="uk" v-if="global" />
-      <liveStats :stats="live" :loading="dataLoading" />
+      <stats
+        :stats="statistics"
+        :uk="uk"
+        :countryTitle="title"
+        :numberFormatting="numberFormatting"
+        v-if="statistics"
+      />
+      <liveStats
+        :stats="live"
+        :loading="dataLoading"
+        :numberFormatting="numberFormatting"
+      />
     </section>
   </main>
   <Footer />
@@ -35,7 +45,7 @@ export default {
       dataLoading: false,
       date: null,
       title: 'Global',
-      global: {},
+      statistics: {},
       countries: [],
       live: [],
       uk: {}
@@ -54,6 +64,27 @@ export default {
       )
       const data = await response.json()
       return data
+    },
+    getCountry (country) {
+      this.title = country.Country
+      this.statistics = country
+    },
+    clearCountry () {
+      this.title = 'Global'
+      this.getCovidData('summary')
+        .then(data => {
+          this.statistics = data.Global
+        })
+        .catch(err => {
+          if (window.console) console.error(err)
+        })
+    },
+    numberFormatting (num) {
+      let formatted = 0
+      if (num) {
+        formatted = num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')
+      }
+      return formatted
     }
   },
   created () {
@@ -67,7 +98,7 @@ export default {
           console.log(data)
         }
         this.date = data.Date
-        this.global = data.Global
+        this.statistics = data.Global
         this.countries = data.Countries
       })
       .catch(err => console.error(err))

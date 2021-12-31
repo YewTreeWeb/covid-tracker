@@ -21,6 +21,46 @@
       <li><span>New Deaths:</span> {{ numberFormatting(stats.NewDeaths) }}</li>
     </ul>
   </article>
+  <article
+    v-if="Object.keys(uk).length && countryTitle === 'United Kingdom'"
+    class="card"
+  >
+    <h3>
+      Hospitalisations <span>{{ dateFormat }}</span>
+    </h3>
+    <ul>
+      <li>
+        <span>New Hospitalisations:</span
+        >{{ numberFormatting(uk.newHospitalisations) }}
+      </li>
+    </ul>
+  </article>
+  <article
+    v-if="Object.keys(uk).length && countryTitle === 'United Kingdom'"
+    class="card"
+  >
+    <h3>
+      Vaccinations <span>{{ dateFormat }}</span>
+    </h3>
+    <ul>
+      <li>
+        <span>First vaccinations:</span
+        >{{ numberFormatting(uk.firstVaccinationsDaily) }}
+      </li>
+      <li>
+        <span>First Cumulative Vaccinations:</span
+        >{{ numberFormatting(uk.firstVaccinationsCumulative) }}
+      </li>
+      <li>
+        <span>Second vaccinations:</span
+        >{{ numberFormatting(uk.secondVaccinationsDaily) }}
+      </li>
+      <li>
+        <span>Second Cumulative Vaccinations:</span
+        >{{ numberFormatting(uk.secondVaccinationsCumulative) }}
+      </li>
+    </ul>
+  </article>
 </template>
 
 <script>
@@ -28,16 +68,14 @@ export default {
   name: 'Stats',
   props: {
     stats: Object,
-    countries: Array,
-    uk: Object
+    uk: Object,
+    countryTitle: String,
+    numberFormatting: Function
   },
-  methods: {
-    numberFormatting (num) {
-      let formatted = 0
-      if (num) {
-        formatted = num.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',')
-      }
-      return formatted
+  computed: {
+    dateFormat () {
+      const date = this.uk.date.split('-')
+      return `${date[2]}-${date[1]}-${date[0]}`
     }
   }
 }

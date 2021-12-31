@@ -3,14 +3,26 @@
     <div class="container">
       <virus width="100" />
       <h1>{{ title }}</h1>
-      <select name="countries" class="select-countries">
-        <option
-          v-for="country in countries"
-          :key="country.ID"
-          :value="country.CountryCode"
-          >{{ country.Country }}</option
+      <label for="countries">
+        Select country cases:
+        <select
+          name="countries"
+          class="select-countries"
+          v-model="selected"
+          @change="onCountryChange"
         >
-      </select>
+          <option value="" disabled selected>Select a country</option>
+          <option
+            v-for="country in countries"
+            :key="country.ID"
+            :value="country.CountryCode"
+            >{{ country.Country }}</option
+          >
+        </select>
+        <button v-if="selected" @click.prevent="clearedCountry">
+          Clear country
+        </button>
+      </label>
     </div>
   </header>
 </template>
@@ -23,17 +35,25 @@ export default {
     Virus
   },
   props: {
-    countries: Array
+    countries: Array,
+    getCovidData: Function
   },
-  emits: ['selectedCountry'],
+  emits: ['selectedCountry', 'clearedCountry'],
   data () {
     return {
-      title: 'Covid, Where Art Thou?'
+      title: 'Covid, Where Art Thou?',
+      selected: ''
     }
   },
   methods: {
-    selectedCountry (country) {
-      console.log(country)
+    onCountryChange () {
+      const country = this.countries.find(
+        item => item.CountryCode === this.selected
+      )
+      this.$emit('selectedCountry', country)
+    },
+    clearedCountry () {
+      this.$parent.clearCountry()
     }
   }
 }
