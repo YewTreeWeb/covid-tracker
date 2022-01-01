@@ -4,13 +4,15 @@
   <main class="container" :class="{ 'is-loading': loading }">
     <hero :title="title" :date="date" />
     <section class="cases">
-      <stats
-        :stats="statistics"
-        :uk="uk"
-        :countryTitle="title"
-        :numberFormatting="numberFormatting"
-        v-if="statistics"
-      />
+      <div>
+        <stats
+          :stats="statistics"
+          :uk="uk"
+          :countryTitle="title"
+          :numberFormatting="numberFormatting"
+          v-if="statistics"
+        />
+      </div>
       <liveStats
         :stats="live"
         :loading="dataLoading"
@@ -90,8 +92,11 @@ export default {
   created () {
     const body = document.getElementsByTagName('body')[0]
     const date = new Date()
-    const formatDate = `${date.getFullYear()}-${date.getMonth() +
-      1}-${date.getDate()}`
+    const day = date.getDate() < 10 ? `0${date.getDate()}` : date.getDate()
+    const dayPrev =
+      date.getDate() - 1 < 10 ? `0${date.getDate() - 1}` : date.getDate() - 1
+    const month =
+      date.getMonth() + 1 < 10 ? `0${date.getMonth() + 1}` : date.getMonth() + 1
     this.getCovidData('summary')
       .then(data => {
         if (process.env.NODE_ENV !== 'production') {
@@ -104,6 +109,7 @@ export default {
       .catch(err => console.error(err))
     this.getCovidData('live/country/united-kingdom')
       .then(data => {
+        const formatDate = `${date.getFullYear()}-${month}-${day}`
         data.filter(item => {
           if (item.Date.includes(formatDate)) {
             this.live.push(item)
@@ -124,8 +130,8 @@ export default {
     this.getGovCovidData()
       .then(data => {
         const stats = data.data
-        const formatDate = `${date.getFullYear()}-${date.getMonth() +
-          1}-${date.getDate() - 1}`
+        const formatDate = `${date.getFullYear()}-${month}-${dayPrev}`
+        console.log(stats)
         stats.filter(item => {
           if (item.date.includes(formatDate)) {
             this.uk = item
@@ -141,8 +147,14 @@ export default {
       this.getCovidData('live/country/united-kingdom')
         .then(data => {
           const date = new Date()
-          const formatDate = `${date.getFullYear()}-${date.getMonth() +
-            1}-${date.getDate()}`
+          const day =
+            date.getDate() < 10 ? `0${date.getDate()}` : date.getDate()
+          const month =
+            date.getMonth() + 1 < 10
+              ? `0${date.getMonth() + 1}`
+              : date.getMonth() + 1
+          const formatDate = `${date.getFullYear()}-${month}-${day}`
+
           data.filter(item => {
             if (item.Date.includes(formatDate)) {
               this.live.push(item)
@@ -178,8 +190,23 @@ main {
     }
   }
   .cases {
-    @include flex(flex-start, space-between, row);
+    @include flex(flex-start, center, row);
+    @supports (gap: 1px) {
+      gap: 0 30px;
+    }
     @include padding(em(60) null);
+    > div {
+      margin-right: 30px;
+      @supports (display: grid) {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        grid-template-rows: 1fr;
+      }
+      @supports (gap: 1px) {
+        margin-right: unset;
+        gap: 30px;
+      }
+    }
   }
 }
 </style>

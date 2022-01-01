@@ -1,6 +1,6 @@
 <template>
   <section class="hero">
-    <div>
+    <div class="hero__content">
       <h2>{{ title }} Cases</h2>
       <p><span>Date:</span>{{ formatedDate }}</p>
     </div>
@@ -56,6 +56,11 @@ export default {
   &__img {
     @include fluid(max-width, 400px, 1000px, 400px, 1920px);
     @include size(100%, auto);
+  }
+  &__content {
+    @media screen and (min-width: 415px) {
+      max-width: 750px;
+    }
   }
 }
 </style>

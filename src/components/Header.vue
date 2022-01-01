@@ -4,14 +4,14 @@
       <virus width="100" />
       <h1>{{ title }}</h1>
       <label for="countries">
-        Select country cases:
+        Select country:
         <select
           name="countries"
           class="select-countries"
           v-model="selected"
           @change="onCountryChange"
         >
-          <option value="" disabled selected>Select a country</option>
+          <option value="" disabled selected>Global</option>
           <option
             v-for="country in countries"
             :key="country.ID"
@@ -19,10 +19,10 @@
             >{{ country.Country }}</option
           >
         </select>
-        <button v-if="selected" @click.prevent="clearedCountry">
-          Clear country
-        </button>
       </label>
+      <button v-if="selected" @click.prevent="clearedCountry">
+        Clear country
+      </button>
     </div>
   </header>
 </template>
@@ -62,12 +62,23 @@ export default {
 <style lang="scss">
 header {
   background-color: v(clr-neutral-200);
+  font-size: v(fs-xl);
   .container {
     @include flex(center, flex-start, row, false);
     @include padding(em(20) null);
   }
   h1 {
     margin-left: rem(40);
+  }
+  label,
+  button {
+    margin-left: auto;
+  }
+  label {
+    font-weight: map-get($weights, 700);
+    select {
+      font-weight: map-get($weights, 400);
+    }
   }
 }
 </style>

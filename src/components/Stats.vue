@@ -25,9 +25,8 @@
     v-if="Object.keys(uk).length && countryTitle === 'United Kingdom'"
     class="card"
   >
-    <h3>
-      Hospitalisations <span>{{ dateFormat }}</span>
-    </h3>
+    <h3>Hospitalisation</h3>
+    <p>Data taken on the {{ dateFormat }}</p>
     <ul>
       <li>
         <span>New Hospitalisations:</span
@@ -39,9 +38,8 @@
     v-if="Object.keys(uk).length && countryTitle === 'United Kingdom'"
     class="card"
   >
-    <h3>
-      Vaccinations <span>{{ dateFormat }}</span>
-    </h3>
+    <h3>Vaccinations</h3>
+    <p>Data taken on the {{ dateFormat }}</p>
     <ul>
       <li>
         <span>First vaccinations:</span
@@ -83,6 +81,12 @@ export default {
 
 <style lang="scss">
 article {
-  width: max(28%, 350px);
+  @include margin(null 30px 30px null);
+  &:nth-of-type(2n) {
+    margin-right: 0;
+  }
+  @supports (gap: 1px) {
+    @include margin(null unset unset null);
+  }
 }
 </style>
