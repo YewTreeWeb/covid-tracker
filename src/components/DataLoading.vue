@@ -1,6 +1,7 @@
 <template>
   <div class="loader">
-    <div class="balls">
+    <p class="error" v-if="msg">{{ msg }}</p>
+    <div class="balls" v-else>
       <div></div>
       <div></div>
       <div></div>
@@ -10,13 +11,20 @@
 
 <script>
 export default {
-  name: 'DataLoading'
+  name: 'DataLoading',
+  props: {
+    msg: String
+  }
 }
 </script>
 
 <style lang="scss" scoped>
 .loader {
-  @include padding(em(60) em(40) null);
+  @include padding(em(30) null);
+  .error {
+    font-weight: map-get($weights, 700);
+    color: v(clr-accent-100);
+  }
   .balls {
     width: 4em;
     @include flex(center, space-between, row, false);

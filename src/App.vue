@@ -1,5 +1,5 @@
 <template>
-  <loading v-if="loading" />
+  <loading v-if="loading" :msg="loadingErrMsg" />
   <Header :countries="countries" @selectedCountry="getCountry" />
   <main class="container" :class="{ 'is-loading': loading }">
     <hero :title="title" :date="date" />
@@ -17,6 +17,7 @@
         :stats="live"
         :loading="dataLoading"
         :numberFormatting="numberFormatting"
+        :msg="loadingErrMsg"
       />
     </section>
   </main>
@@ -44,6 +45,7 @@ export default {
   data () {
     return {
       loading: true,
+      loadingErrMsg: null,
       dataLoading: false,
       date: null,
       title: 'Global',
@@ -115,6 +117,7 @@ export default {
             this.live.push(item)
           }
         })
+        this.loadingErrMsg = null
       })
       .then(() => {
         setTimeout(() => {
@@ -123,6 +126,7 @@ export default {
         }, 2000)
       })
       .catch(err => {
+        this.loadingErrMsg = `Error getting data: ${err.message}`
         if (window.console) {
           console.error(err)
         }
@@ -131,7 +135,6 @@ export default {
       .then(data => {
         const stats = data.data
         const formatDate = `${date.getFullYear()}-${month}-${dayPrev}`
-        console.log(stats)
         stats.filter(item => {
           if (item.date.includes(formatDate)) {
             this.uk = item
@@ -160,6 +163,7 @@ export default {
               this.live.push(item)
             }
           })
+          this.loadingErrMsg = null
         })
         .then(() => {
           setTimeout(() => {
@@ -167,6 +171,7 @@ export default {
           }, 2000)
         })
         .catch(err => {
+          this.loadingErrMsg = `Unable to update: ${err.message}`
           if (window.console) {
             console.error(err)
           }
@@ -197,10 +202,10 @@ main {
     @include padding(em(60) null);
     > div {
       margin-right: 30px;
+      @include flex(flex-start, center, row);
       @supports (display: grid) {
         display: grid;
-        grid-template-columns: 1fr 1fr;
-        grid-template-rows: 1fr;
+        grid-template-columns: repeat(auto-fit, minmax(min(100%, 15ch), 1fr));
       }
       @supports (gap: 1px) {
         margin-right: unset;

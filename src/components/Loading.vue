@@ -1,13 +1,18 @@
 <template>
   <div class="loading">
     <div class="loader"></div>
-    <h2>Getting Covid-19 data...</h2>
+    <h2>{{ msg }}</h2>
   </div>
 </template>
 
 <script>
 export default {
-  name: 'Loading'
+  name: 'Loading',
+  props: {
+    msg: {
+      default: 'Getting Covid-19 data...'
+    }
+  }
 }
 </script>
 

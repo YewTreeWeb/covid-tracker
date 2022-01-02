@@ -85,8 +85,10 @@ article {
   &:nth-of-type(2n) {
     margin-right: 0;
   }
+  flex: 1 1 15ch;
   @supports (gap: 1px) {
     @include margin(null unset unset null);
+    flex: unset;
   }
 }
 </style>

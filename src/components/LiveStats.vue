@@ -2,7 +2,7 @@
   <aside class="card">
     <h3>Live UK Cases</h3>
     <p>All data for Covid cases are refreshed every 15 minutes</p>
-    <data-loading v-if="loading" />
+    <data-loading v-if="loading" :msg="msg" />
     <ul class="liveCases" v-else>
       <li v-for="stat in stats" :key="stat.ID">
         <span>Place:</span>{{ stat.Province }}<br />
@@ -27,7 +27,8 @@ export default {
       type: Boolean,
       required: true
     },
-    numberFormatting: Function
+    numberFormatting: Function,
+    msg: String
   }
 }
 </script>
