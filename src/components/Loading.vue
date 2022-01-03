@@ -1,6 +1,7 @@
 <template>
   <div class="loading">
-    <div class="loader"></div>
+    <img class="error" v-if="error" src="../assets/error.svg" alt="404" />
+    <div class="loader" v-else></div>
     <h2>{{ msg }}</h2>
   </div>
 </template>
@@ -11,7 +12,8 @@ export default {
   props: {
     msg: {
       default: 'Getting Covid-19 data...'
-    }
+    },
+    error: Boolean
   }
 }
 </script>
@@ -42,6 +44,9 @@ export default {
       transform: scaleY(1);
       animation: fill 3s linear infinite;
     }
+  }
+  > .error {
+    max-height: 75vh;
   }
   > h2 {
     margin-top: 2em;

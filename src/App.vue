@@ -1,5 +1,5 @@
 <template>
-  <loading v-if="loading" :msg="loadingErrMsg" />
+  <loading v-if="loading" :msg="loadingErrMsg" :error="error" />
   <Header :countries="countries" @selectedCountry="getCountry" />
   <main class="container" :class="{ 'is-loading': loading }">
     <hero :title="title" :date="date" />
@@ -52,7 +52,8 @@ export default {
       statistics: {},
       countries: [],
       live: [],
-      uk: {}
+      uk: {},
+      error: false
     }
   },
   methods: {
@@ -117,6 +118,7 @@ export default {
             this.live.push(item)
           }
         })
+        this.error = false
         this.loadingErrMsg = null
       })
       .then(() => {
@@ -130,6 +132,11 @@ export default {
         if (window.console) {
           console.error(err)
         }
+        setTimeout(() => {
+          this.error = true
+          this.loadingErrMsg =
+            'There seems to be an issue with the data source. Check back later'
+        }, 3500)
       })
     this.getGovCovidData()
       .then(data => {
