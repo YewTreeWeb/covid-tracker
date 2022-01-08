@@ -40,7 +40,7 @@ export default {
 
 <style lang="scss">
 .hero {
-  @include flex(center, space-between, row);
+  @include flex(center, center, row);
   h2 {
     line-height: map-get($lh, 5xl);
     font-size: clamp(2rem, 5vw, 7rem);
@@ -56,11 +56,17 @@ export default {
   &__img {
     @include fluid(max-width, 400px, 1000px, 400px, 1920px);
     @include size(100%, auto);
+    @media screen and (min-width: 600px) {
+      margin-top: em(30);
+    }
   }
   &__content {
     @media screen and (min-width: 415px) {
       max-width: 750px;
     }
+  }
+  @media screen and (min-width: 601px) {
+    flex-wrap: nowrap;
   }
 }
 </style>

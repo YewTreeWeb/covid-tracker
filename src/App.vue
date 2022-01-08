@@ -1,5 +1,5 @@
 <template>
-  <loading v-if="loading" :msg="loadingErrMsg" :error="error" />
+  <loading v-if="loading" :msg="loadingMsg" :error="error" />
   <Header :countries="countries" @selectedCountry="getCountry" />
   <main class="container" :class="{ 'is-loading': loading }">
     <hero :title="title" :date="date" />
@@ -17,7 +17,7 @@
         :stats="live"
         :loading="dataLoading"
         :numberFormatting="numberFormatting"
-        :msg="loadingErrMsg"
+        :msg="loadingMsg"
       />
     </section>
   </main>
@@ -45,7 +45,7 @@ export default {
   data () {
     return {
       loading: true,
-      loadingErrMsg: null,
+      loadingMsg: null,
       dataLoading: false,
       date: null,
       title: 'Global',
@@ -119,7 +119,7 @@ export default {
           }
         })
         this.error = false
-        this.loadingErrMsg = null
+        this.loadingMsg = null
       })
       .then(() => {
         setTimeout(() => {
@@ -128,13 +128,13 @@ export default {
         }, 2000)
       })
       .catch(err => {
-        this.loadingErrMsg = `Error getting data: ${err.message}`
+        this.loadingMsg = `Error getting data: ${err.message}`
         if (window.console) {
           console.error(err)
         }
         setTimeout(() => {
           this.error = true
-          this.loadingErrMsg =
+          this.loadingMsg =
             'There seems to be an issue with the data source. Check back later'
         }, 3500)
       })
@@ -154,6 +154,7 @@ export default {
     window.setInterval(() => {
       this.live = []
       this.dataLoading = true
+      this.loadingMsg = 'Updating...'
       this.getCovidData('live/country/united-kingdom')
         .then(data => {
           const date = new Date()
@@ -170,7 +171,7 @@ export default {
               this.live.push(item)
             }
           })
-          this.loadingErrMsg = null
+          this.loadingMsg = null
         })
         .then(() => {
           setTimeout(() => {
@@ -178,7 +179,7 @@ export default {
           }, 2000)
         })
         .catch(err => {
-          this.loadingErrMsg = `Unable to update: ${err.message}`
+          this.loadingMsg = `Unable to update: ${err.message}`
           if (window.console) {
             console.error(err)
           }
@@ -202,21 +203,20 @@ main {
     }
   }
   .cases {
-    @include flex(flex-start, center, row);
+    @supports (display: grid) {
+      display: grid;
+      grid-template-columns: 1fr 0.6fr;
+    }
     @supports (gap: 1px) {
-      gap: 0 30px;
+      gap: 0 em(30px);
     }
     @include padding(em(60) null);
     > div {
       margin-right: 30px;
-      @include flex(flex-start, center, row);
-      @supports (display: grid) {
-        display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(min(100%, 15ch), 1fr));
-      }
+      @include flex(stretch, center, row);
       @supports (gap: 1px) {
         margin-right: unset;
-        gap: 30px;
+        gap: em(30px);
       }
     }
   }

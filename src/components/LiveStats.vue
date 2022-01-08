@@ -35,7 +35,23 @@ export default {
 
 <style lang="scss">
 aside {
-  max-height: 50vh;
+  max-height: 70vh;
   overflow-y: scroll;
+  scroll-behavior: smooth;
+  scrollbar-width: thin; /* "auto" or "thin" */
+  scrollbar-color: v(clr-neutral-500) v(clr-neutral-200); /* scroll thumb and track */
+  &::-webkit-scrollbar {
+    width: rem(12); /* width of the entire scrollbar */
+  }
+
+  &::-webkit-scrollbar-track {
+    background: v(clr-neutral-200); /* color of the tracking area */
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background-color: v(clr-neutral-500); /* color of the scroll thumb */
+    border-radius: 8px; /* roundness of the scroll thumb */
+    border: 3px solid v(clr-neutral-200); /* creates padding around scroll thumb */
+  }
 }
 </style>
