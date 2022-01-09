@@ -81,19 +81,21 @@ export default {
 
 <style lang="scss">
 article {
-  min-width: min(100%, 356px);
-  width: 47%;
+  width: min(100%, 284px);
+  min-height: 250px;
+  flex: 1 1 min(100%, 284px);
   @include margin(null 30px 30px null);
   &:nth-of-type(2n) {
     margin-right: 0;
   }
-  flex: 1 1 min(100%, 407px);
   @supports (gap: 1px) {
     @include margin(null unset unset null);
-    flex: unset;
   }
   > p {
-    width: 320px;
+    max-width: 320px;
+  }
+  @media screen and (min-width: 1427px) {
+    width: auto;
   }
 }
 </style>

@@ -100,6 +100,7 @@ export default {
       date.getDate() - 1 < 10 ? `0${date.getDate() - 1}` : date.getDate() - 1
     const month =
       date.getMonth() + 1 < 10 ? `0${date.getMonth() + 1}` : date.getMonth() + 1
+
     this.getCovidData('summary')
       .then(data => {
         if (process.env.NODE_ENV !== 'production') {
@@ -141,10 +142,12 @@ export default {
     this.getGovCovidData()
       .then(data => {
         const stats = data.data
+        console.log(stats)
         const formatDate = `${date.getFullYear()}-${month}-${dayPrev}`
         stats.filter(item => {
           if (item.date.includes(formatDate)) {
             this.uk = item
+            console.log(this.uk)
           }
         })
       })
@@ -213,7 +216,9 @@ main {
     @include padding(em(60) null);
     > div {
       margin-right: 30px;
-      @include flex(stretch, center, row);
+      @include flex(flex-start, center, row);
+      align-content: flex-start;
+      flex-grow: 1;
       @supports (gap: 1px) {
         margin-right: unset;
         gap: em(30px);

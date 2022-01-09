@@ -3,26 +3,28 @@
     <div class="container">
       <virus width="100" />
       <h1>{{ title }}</h1>
-      <label for="countries">
-        Select country:
-        <select
-          name="countries"
-          class="select-countries"
-          v-model="selected"
-          @change="onCountryChange"
-        >
-          <option value="" disabled selected>Global</option>
-          <option
-            v-for="country in countries"
-            :key="country.ID"
-            :value="country.CountryCode"
-            >{{ country.Country }}</option
+      <div class="select-country">
+        <label for="countries">
+          Select country:
+          <select
+            name="countries"
+            class="select-countries"
+            v-model="selected"
+            @change="onCountryChange"
           >
-        </select>
-      </label>
-      <button v-if="selected" @click.prevent="clearedCountry">
-        Clear country
-      </button>
+            <option value="" disabled selected>Global</option>
+            <option
+              v-for="country in countries"
+              :key="country.ID"
+              :value="country.CountryCode"
+              >{{ country.Country }}</option
+            >
+          </select>
+        </label>
+        <button v-if="selected" @click.prevent="clearedCountry">
+          Clear country
+        </button>
+      </div>
     </div>
   </header>
 </template>
@@ -64,20 +66,31 @@ header {
   background-color: v(clr-neutral-200);
   font-size: v(fs-xl);
   .container {
-    @include flex(center, flex-start, row, false);
+    @include flex(center, center, row);
     @include padding(em(20) null);
+    @media screen and (min-width: 1360px) {
+      justify-content: flex-start;
+    }
   }
   h1 {
-    margin-left: rem(40);
+    @include margin(null rem(10) null rem(40));
   }
-  label,
-  button {
-    margin-left: auto;
-  }
-  label {
-    font-weight: map-get($weights, 700);
-    select {
-      font-weight: map-get($weights, 400);
+  .select-country {
+    @include flex(center, center, row);
+    margin-top: rem(40);
+    label {
+      font-weight: map-get($weights, 700);
+      select {
+        font-weight: map-get($weights, 400);
+        margin-left: em(10);
+      }
+    }
+    button {
+      margin-left: em(15);
+    }
+    @media screen and (min-width: 1360px) {
+      margin-top: unset;
+      margin-left: auto;
     }
   }
 }
