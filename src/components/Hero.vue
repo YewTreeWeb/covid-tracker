@@ -43,7 +43,7 @@ export default {
   @include flex(center, center, row);
   h2 {
     line-height: map-get($lh, 5xl);
-    font-size: clamp(2rem, 5vw, 7rem);
+    font-size: clamp(2rem, 4vw, 6rem);
   }
   p {
     font-size: clamp(1.125rem, 3vw, 1.875rem);

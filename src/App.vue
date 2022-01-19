@@ -101,6 +101,7 @@ export default {
     const day = date.getDate() < 10 ? `0${date.getDate()}` : date.getDate()
     const month =
       date.getMonth() + 1 < 10 ? `0${date.getMonth() + 1}` : date.getMonth() + 1
+
     this.getCovidData('summary')
       .then(data => {
         if (process.env.NODE_ENV !== 'production') {
@@ -212,8 +213,14 @@ main {
     @include padding(em(60) null);
     > div {
       margin-right: 30px;
+<<<<<<< HEAD
       @include flex(stretch, center, row);
       align-content: flex-start;
+=======
+      @include flex(flex-start, center, row);
+      align-content: flex-start;
+      flex-grow: 1;
+>>>>>>> 2ea0b34a40c2e74e8c955356396a1c6044ea342a
       @supports (gap: 1px) {
         margin-right: unset;
         gap: em(30px);
