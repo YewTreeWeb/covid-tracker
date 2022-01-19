@@ -29,8 +29,10 @@
     <p>UK government data, taken on the {{ dateFormat }}</p>
     <ul>
       <li>
-        <span>New Hospitalisations:</span
-        >{{ numberFormatting(uk.newHospitalisations) }}
+        <span>Hospital Cases:</span>{{ numberFormatting(uk.hospitalCases) }}
+      </li>
+      <li v-if="uk.newAdmissions">
+        <span>New Admissions:</span>{{ numberFormatting(uk.newAdmissions) }}
       </li>
     </ul>
   </article>
@@ -42,20 +44,16 @@
     <p>UK government data, taken on the {{ dateFormat }}</p>
     <ul>
       <li>
-        <span>First vaccinations:</span
-        >{{ numberFormatting(uk.firstVaccinationsDaily) }}
+        <span>First Vaccinations:</span>{{ numberFormatting(uk.firstDose) }}
       </li>
       <li>
-        <span>First Cumulative Vaccinations:</span
-        >{{ numberFormatting(uk.firstVaccinationsCumulative) }}
+        <span>Second Vaccinations:</span>{{ numberFormatting(uk.secondDose) }}
       </li>
-      <li>
-        <span>Second vaccinations:</span
-        >{{ numberFormatting(uk.secondVaccinationsDaily) }}
+      <li v-if="uk.thirdDose">
+        <span>Third Vaccinations:</span>{{ numberFormatting(uk.thirdDose) }}
       </li>
-      <li>
-        <span>Second Cumulative Vaccinations:</span
-        >{{ numberFormatting(uk.secondVaccinationsCumulative) }}
+      <li v-if="uk.boosterDose">
+        <span>Booster Vaccinations:</span>{{ numberFormatting(uk.boosterDose) }}
       </li>
     </ul>
   </article>
@@ -82,7 +80,7 @@ export default {
 <style lang="scss">
 article {
   min-width: min(100%, 356px);
-  width: 47%;
+  width: 48%;
   @include margin(null 30px 30px null);
   &:nth-of-type(2n) {
     margin-right: 0;

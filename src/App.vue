@@ -45,7 +45,7 @@ export default {
   data () {
     return {
       loading: true,
-      loadingMsg: null,
+      loadingMsg: 'Getting Covid-19 data...',
       dataLoading: false,
       date: null,
       title: 'Global',
@@ -64,8 +64,11 @@ export default {
       return data
     },
     async getGovCovidData () {
+      const filters = 'filters=areaType=overview&'
+      const structure =
+        'structure={"date":"date", "firstDose":"cumPeopleVaccinatedFirstDoseByPublishDate", "secondDose":"cumPeopleVaccinatedSecondDoseByPublishDate", "thirdDose":"cumPeopleVaccinatedThirdDoseByPublishDate", "boosterDose":"cumPeopleVaccinatedBoosterDoseByPublishDate", "hospitalCases":"hospitalCases", "newAdmissions":"newAdmissions"}'
       const response = await fetch(
-        'https://api.coronavirus.data.gov.uk/v1/data'
+        `https://api.coronavirus.data.gov.uk/v1/data?${filters}${structure}`
       )
       const data = await response.json()
       return data
@@ -96,8 +99,6 @@ export default {
     const body = document.getElementsByTagName('body')[0]
     const date = new Date()
     const day = date.getDate() < 10 ? `0${date.getDate()}` : date.getDate()
-    const dayPrev =
-      date.getDate() - 1 < 10 ? `0${date.getDate() - 1}` : date.getDate() - 1
     const month =
       date.getMonth() + 1 < 10 ? `0${date.getMonth() + 1}` : date.getMonth() + 1
     this.getCovidData('summary')
@@ -119,7 +120,7 @@ export default {
           }
         })
         this.error = false
-        this.loadingMsg = null
+        this.loadingMsg = 'Getting Covid-19 data...'
       })
       .then(() => {
         setTimeout(() => {
@@ -141,12 +142,10 @@ export default {
     this.getGovCovidData()
       .then(data => {
         const stats = data.data
-        const formatDate = `${date.getFullYear()}-${month}-${dayPrev}`
-        stats.filter(item => {
-          if (item.date.includes(formatDate)) {
-            this.uk = item
-          }
-        })
+        this.uk = stats[1]
+        if (process.env.NODE_ENV !== 'production') {
+          console.log(this.uk)
+        }
       })
       .catch(err => console.error(err))
   },
@@ -214,6 +213,7 @@ main {
     > div {
       margin-right: 30px;
       @include flex(stretch, center, row);
+      align-content: flex-start;
       @supports (gap: 1px) {
         margin-right: unset;
         gap: em(30px);
