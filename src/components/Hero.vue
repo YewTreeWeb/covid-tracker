@@ -40,7 +40,7 @@ export default {
 
 <style lang="scss">
 .hero {
-  @include flex(center, center, row);
+  @include flex(center, space-between, row);
   h2 {
     line-height: map-get($lh, 5xl);
     font-size: clamp(2rem, 4vw, 6rem);

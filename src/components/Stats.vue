@@ -79,14 +79,10 @@ export default {
 
 <style lang="scss">
 article {
-<<<<<<< HEAD
-  min-width: min(100%, 356px);
+  min-width: min(100%, 284px);
   width: 48%;
-=======
-  width: min(100%, 284px);
   min-height: 250px;
   flex: 1 1 min(100%, 284px);
->>>>>>> 2ea0b34a40c2e74e8c955356396a1c6044ea342a
   @include margin(null 30px 30px null);
   &:nth-of-type(2n) {
     margin-right: 0;
