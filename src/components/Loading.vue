@@ -1,5 +1,5 @@
 <template>
-  <div class="loading">
+  <div class="loading container">
     <img class="error" v-if="error" src="../assets/error.svg" alt="404" />
     <div class="loader" v-else></div>
     <h2>{{ msg }}</h2>
@@ -49,10 +49,10 @@ export default {
     max-height: 75vh;
   }
   > h2 {
-    margin-top: 2em;
-    @supports (gap: 1px) {
-      margin-top: unset;
-    }
+    margin-top: 1em;
+    text-align: center;
+    font-size: clamp(map_get($sizes, lg), 3vw + 1rem, map_get($sizes, 4xl));
+    line-height: clamp(map_get($lh, base), 3vw + 1rem, map_get($lh, 4xl));
   }
 }
 

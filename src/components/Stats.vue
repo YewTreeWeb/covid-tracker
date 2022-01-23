@@ -82,7 +82,6 @@ article {
   min-width: min(100%, 284px);
   width: 48%;
   min-height: 250px;
-  flex: 1 1 min(100%, 284px);
   @include margin(null 30px 30px null);
   &:nth-of-type(2n) {
     margin-right: 0;

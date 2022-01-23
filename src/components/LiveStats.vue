@@ -35,6 +35,7 @@ export default {
 
 <style lang="scss">
 aside {
+  width: 33%;
   max-height: 70vh;
   overflow-y: scroll;
   scroll-behavior: smooth;

@@ -59,5 +59,11 @@ export default {
 footer {
   background-color: v(clr-neutral-200);
   @include padding(em(40));
+  a {
+    color: v(clr-accent-100);
+    &:hover {
+      text-decoration: underline;
+    }
+  }
 }
 </style>

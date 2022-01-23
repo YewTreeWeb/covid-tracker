@@ -3,7 +3,7 @@
     <div class="container">
       <virus width="100" />
       <h1>{{ title }}</h1>
-      <div class="select-country">
+      <div class="select-country" :class="{ 'mt-40': selected }">
         <label for="countries">
           Select country:
           <select
@@ -77,7 +77,9 @@ header {
   }
   .select-country {
     @include flex(center, center, row);
-    margin-top: rem(40);
+    .mt-40 {
+      margin-top: rem(40);
+    }
     label {
       font-weight: map-get($weights, 700);
       select {

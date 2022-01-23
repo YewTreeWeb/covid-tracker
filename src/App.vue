@@ -203,15 +203,13 @@ main {
     }
   }
   .cases {
-    @supports (display: grid) {
-      display: grid;
-      grid-template-columns: 1fr 0.6fr;
-    }
+    @include flex(flex-start, center, row);
     @supports (gap: 1px) {
       gap: 0 em(30px);
     }
     @include padding(em(60) null);
     > div {
+      width: 65.3%;
       margin-right: 30px;
       @include flex(stretch, center, row);
       align-content: flex-start;
