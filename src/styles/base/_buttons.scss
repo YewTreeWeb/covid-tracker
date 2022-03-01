@@ -1,0 +1,8 @@
+button {
+  width: fit-content;
+  cursor: pointer;
+  border-radius: 5px;
+  background-color: v(clr-primary-100);
+  @include padding(em(10) em(18));
+  color: v(clr-neutral-white);
+}

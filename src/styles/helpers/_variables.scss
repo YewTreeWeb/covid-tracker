@@ -1,0 +1,72 @@
+// The color palette
+// todo: There are too many colours. Reduce.
+$colours: (
+  neutral: (
+    'white': #ffffff,
+    'black': #1c1c24,
+    100: #ffffff,
+    200: #f8f7f2,
+    300: #dfe0eb,
+    400: #f0f1f7,
+    500: #9fa2b4
+  ),
+  dark: (
+    100: #262125,
+    200: #0d0d0d,
+    300: #131419,
+    400: #3b4252,
+    500: #1c1c24
+  ),
+  primary: (
+    100: #88c0d0,
+    200: #5e81ac,
+    300: #4550e5
+  ),
+  accent: (
+    100: #d36b75,
+    200: #a43944
+  )
+);
+
+// Fonts
+$ff: quote(Asap), system-ui, sans-serif !default;
+$fheader: quote(Ubuntu), system-ui, sans-serif !default;
+
+$sizes: (
+  xs: 0.75rem,
+  sm: 0.875rem,
+  base: 1rem,
+  lg: 1.125rem,
+  xl: 1.25rem,
+  2xl: 1.5rem,
+  3xl: 1.875rem,
+  4xl: 2.25rem,
+  5xl: 3rem
+) !default;
+
+$lh: (
+  xs: 1rem,
+  sm: 1.25rem,
+  base: 1.5rem,
+  lg: 1.75rem,
+  xl: 1.75rem,
+  2xl: 2rem,
+  3xl: 3rem,
+  4xl: 3rem,
+  5xl: 1
+) !default;
+
+$weights: (
+  400: 400,
+  600: 600,
+  700: 700
+) !default;
+
+$headings: (
+  h1: 5xl,
+  h2: 4xl,
+  h3: 3xl,
+  h4: 2xl,
+  h5: xl,
+  h6: lg
+) !default;
