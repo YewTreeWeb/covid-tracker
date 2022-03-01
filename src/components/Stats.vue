@@ -80,7 +80,7 @@ export default {
 <style lang="scss">
 article {
   min-width: min(100%, 284px);
-  width: 48%;
+  width: 100%;
   min-height: 250px;
   @include margin(null 30px 30px null);
   &:nth-of-type(2n) {
@@ -92,8 +92,8 @@ article {
   > p {
     max-width: 320px;
   }
-  @media screen and (min-width: 1427px) {
-    width: auto;
+  @media screen and (min-width: 1153px) {
+    width: 47%;
   }
 }
 </style>

@@ -73,10 +73,15 @@ header {
     }
   }
   h1 {
-    @include margin(null rem(10) null rem(40));
+    text-align: center;
+    @media screen and (min-width: 601px) {
+      text-align: unset;
+      @include margin(null rem(10) null rem(40));
+    }
   }
   .select-country {
-    @include flex(center, center, row);
+    text-align: center;
+    @include flex(center, center, column);
     .mt-40 {
       margin-top: rem(40);
     }
@@ -84,11 +89,20 @@ header {
       font-weight: map-get($weights, 700);
       select {
         font-weight: map-get($weights, 400);
-        margin-left: em(10);
+        width: 100%;
+        @include margin(em(10) null);
+        @media screen and (min-width: 601px) {
+          width: auto;
+          @include margin(unset null unset em(10));
+        }
       }
     }
     button {
       margin-left: em(15);
+    }
+    @media screen and (min-width: 601px) {
+      text-align: unset;
+      flex-flow: row wrap;
     }
     @media screen and (min-width: 1360px) {
       margin-top: unset;

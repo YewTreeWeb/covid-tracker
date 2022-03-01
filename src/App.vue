@@ -209,13 +209,19 @@ main {
     }
     @include padding(em(60) null);
     > div {
-      width: 65.3%;
+      width: 100%;
       margin-right: 30px;
       @include flex(stretch, center, row);
       align-content: flex-start;
       @supports (gap: 1px) {
         margin-right: unset;
         gap: em(30px);
+      }
+      @media screen and (min-width: 725px) {
+        width: 55%;
+      }
+      @media screen and (min-width: 1153px) {
+        width: 64%;
       }
     }
   }

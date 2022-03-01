@@ -35,8 +35,9 @@ export default {
 
 <style lang="scss">
 aside {
-  width: 33%;
-  max-height: 70vh;
+  width: 100%;
+  max-height: 100vh;
+  margin-top: em(30);
   overflow-y: scroll;
   scroll-behavior: smooth;
   scrollbar-width: thin; /* "auto" or "thin" */
@@ -44,15 +45,21 @@ aside {
   &::-webkit-scrollbar {
     width: rem(12); /* width of the entire scrollbar */
   }
-
   &::-webkit-scrollbar-track {
     background: v(clr-neutral-200); /* color of the tracking area */
   }
-
   &::-webkit-scrollbar-thumb {
     background-color: v(clr-neutral-500); /* color of the scroll thumb */
     border-radius: 8px; /* roundness of the scroll thumb */
     border: 3px solid v(clr-neutral-200); /* creates padding around scroll thumb */
+  }
+  @media screen and (min-width: 725px) {
+    width: 40%;
+    margin-top: unset;
+  }
+  @media screen and (min-width: 1153px) {
+    width: 33%;
+    max-height: 70vh;
   }
 }
 </style>

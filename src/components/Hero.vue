@@ -40,10 +40,13 @@ export default {
 
 <style lang="scss">
 .hero {
-  @include flex(center, space-between, row);
+  @include flex(center, center, row);
+  @media screen and (min-width: 601px) {
+    justify-content: space-between;
+  }
   h2 {
     line-height: map-get($lh, 5xl);
-    font-size: clamp(2rem, 4vw, 6rem);
+    font-size: clamp(3rem, 4vw, 6rem);
   }
   p {
     font-size: clamp(1.125rem, 3vw, 1.875rem);
@@ -56,13 +59,18 @@ export default {
   &__img {
     @include fluid(max-width, 400px, 1000px, 400px, 1920px);
     @include size(100%, auto);
-    @media screen and (min-width: 600px) {
-      margin-top: em(30);
+    margin-top: em(30);
+    @media screen and (min-width: 601px) {
+      margin-top: unset;
     }
   }
   &__content {
+    text-align: center;
     @media screen and (min-width: 415px) {
       max-width: 750px;
+    }
+    @media screen and (min-width: 601px) {
+      text-align: unset;
     }
   }
   @media screen and (min-width: 601px) {
