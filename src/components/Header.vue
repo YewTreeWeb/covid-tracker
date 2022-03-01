@@ -55,6 +55,7 @@ export default {
       this.$emit('selectedCountry', country)
     },
     clearedCountry () {
+      this.selected = ''
       this.$parent.clearCountry()
     }
   }
